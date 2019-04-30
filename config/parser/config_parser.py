@@ -11,6 +11,10 @@ class ConfigurationParser(ABC):
 		self.number_of_errors_in_configurations = 0
 		self.config_file = config_file
 
+	# set config file
+	def set_config_file(self, config_file):
+		self.config_file = config_file
+
 	# parse config
 	@abstractmethod
 	def parse_config(self):

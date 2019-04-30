@@ -1,3 +1,4 @@
+import argparse
 import logging
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
@@ -22,6 +23,7 @@ class Launcher:
 	# return web driver instance
 	def __initialize(self):
 		config_parser = INIConfigurationParser(DEFAULT_CONFIG)
+		self.parse_command_line_arguments(config_parser)
 		config_parser.parse_config()
 
 		Logger.setup(LOG_FORMAT,
@@ -41,6 +43,18 @@ class Launcher:
 		driver = webdriver.Chrome(chrome_options=chrome_options)
 
 		return driver
+
+	# Parsing command line arguments
+	# Set custom config file if given
+	def parse_command_line_arguments(self, config_parser):
+		argumentParser = argparse.ArgumentParser()
+
+		argumentParser.add_argument('-c', '--config', help='Add custom config file.')
+
+		args = argumentParser.parse_args()
+
+		if args.config:
+			config_parser.set_config_file(args.config)
 
 	# log in to facebook
 	# return list of user's facebook friends
