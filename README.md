@@ -39,7 +39,7 @@ Install additional modules: `python -m pip install -r ./requirements.txt`
 
 Edit configs if needed.
 
-Browse to root project directory and run following in command line: `python launcher.py`.
+Browse to root project directory and run following in command line: `python launcher.py -l your_login -p your_password`.
 ## Run example
 Log:
 ```
@@ -58,8 +58,8 @@ Log:
 2019-04-29 20:18:14,974 [INFO]: Waiting for friends tab to be clickable.
 2019-04-29 20:18:19,177 [INFO]: Clicking friends tab.
 2019-04-29 20:18:19,329 [INFO]: Counting friends.
-2019-04-29 20:18:21,954 [INFO]: You have 4 friends.
-2019-04-29 20:18:21,954 [INFO]: Getting friends names.
+2019-04-29 20:18:21,954 [INFO]: You have 6 friends.
+2019-04-29 20:18:21,954 [INFO]: Getting friends names and links.
 2019-04-29 20:18:22,050 [INFO]: Reporting.
 2019-04-29 20:18:22,050 [INFO]: Finishing Selenium test.
 2019-04-29 20:18:22,050 [INFO]: Closing driver.
@@ -68,8 +68,10 @@ Report:
 ```
 Report:
 -Friends:
---Дмитрий Солонцевой
---Kostya Panchenko
---Artem Sysa
---Dmitry Shekhovtsov
+--Alex Kor: https://www.facebook.com/alex.kor.7528?fref=pb&hc_location=friends_tab
+--Дмитрий Солонцевой: https://www.facebook.com/profile.php?id=100035970048527&fref=pb&hc_location=friends_tab
+--Artem Sysa: https://www.facebook.com/artem.sysa.1?fref=pb&hc_location=friends_tab
+--Kostya Panchenko: https://www.facebook.com/kostya.panchenko.52056?fref=pb&hc_location=friends_tab
+--Dmitry Shekhovtsov: https://www.facebook.com/dmitry.shekhovtsov25?fref=pb&hc_location=friends_tab
+--Kostya Panchenko: https://www.facebook.com/kostya.panchenko.127?fref=pb&hc_location=friends_tab
 ```
