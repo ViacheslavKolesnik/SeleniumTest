@@ -17,8 +17,8 @@ class Reporter:
 		report = "---------------------------------------\n" \
 				 "Report:\n" \
 				 "-Friends:\n"
-		for friend in friends:
-			report += f"--{friend}\n"
+		for link, name in friends.items():
+			report += f"--{name}: {link}\n"
 		report += "---------------------------------------"
 
 		return report

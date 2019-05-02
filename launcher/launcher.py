@@ -22,6 +22,7 @@ class Launcher:
 	# create web driver instance
 	# return web driver instance
 	def __initialize(self):
+		Config.initialize()
 		config_parser = INIConfigurationParser(DEFAULT_CONFIG)
 		self.parse_command_line_arguments(config_parser)
 		config_parser.parse_config()
@@ -49,9 +50,14 @@ class Launcher:
 	def parse_command_line_arguments(self, config_parser):
 		argumentParser = argparse.ArgumentParser()
 
+		argumentParser.add_argument('-l', '--login', help='Facebook login.', required=True)
+		argumentParser.add_argument('-p', '--password', help='Facebook password.', required=True)
 		argumentParser.add_argument('-c', '--config', help='Add custom config file.')
 
 		args = argumentParser.parse_args()
+
+		Config.general.login = args.login
+		Config.general.password = args.password
 
 		if args.config:
 			config_parser.set_config_file(args.config)
@@ -104,12 +110,12 @@ class Launcher:
 
 		logger.info(f"You have {friends_count} friends.")
 
-		friends = list()
+		friends = dict()
 		if friends_count > 0:
-			logger.info("Getting friends names.")
+			logger.info("Getting friends names and links.")
 			friends_elements = seleniumUtils.get_all_elements(Config.general.element_wait_time, By.CSS_SELECTOR, ELEMENT_FRIENDS_SELECTOR)
 			for friend in friends_elements:
-				friends.append(friend.text)
+				friends[friend.get_attribute('href')] = friend.text
 
 		return friends
 

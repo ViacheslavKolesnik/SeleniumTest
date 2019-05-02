@@ -39,9 +39,9 @@ class INIConfigurationParser(ConfigurationParser):
 	# parsing config file
 	# setting groups of parameters to proper field in Config
 	def __parse_config_file(self, config_parser):
-		Config.general = self.__parse_general_config(config_parser)
-		Config.reporter = self.__parse_reporter_config(config_parser)
-		Config.logger = self.__parse_logger_config(config_parser)
+		self.__parse_general_config(config_parser, Config.general)
+		self.__parse_reporter_config(config_parser, Config.reporter)
+		self.__parse_logger_config(config_parser, Config.logger)
 
 		if self.number_of_errors_in_configurations == 0:
 			print("Config parsing successful.")
@@ -51,9 +51,8 @@ class INIConfigurationParser(ConfigurationParser):
 
 	# parsing general parameters
 	# return GeneralConfig object
-	def __parse_general_config(self, config_parser):
+	def __parse_general_config(self, config_parser, config):
 		initial_general_config = None
-		general_config = GeneralConfig()
 
 		try:
 			initial_general_config = config_parser['general']
@@ -61,27 +60,21 @@ class INIConfigurationParser(ConfigurationParser):
 			print("Error while parsing general configuration occurred.")
 			exit(EXIT_CODE_CONFIG_PARSING_ERROR)
 
-		general_config.login = initial_general_config['login']
-		general_config.password = initial_general_config['password']
-
 		if initial_general_config['headless'] == 'True':
-			general_config.headless = True
+			config.headless = True
 		else:
-			general_config.headless = False
+			config.headless = False
 
 		if not initial_general_config['element_wait_time'].isdigit():
 			self.number_of_errors_in_configurations += 1
 			print("element_wait_time must be not negative integer.")
 		else:
-			general_config.element_wait_time = int(initial_general_config['element_wait_time'])
-
-		return general_config
+			config.element_wait_time = int(initial_general_config['element_wait_time'])
 
 	# parsing reporter related parameters
 	# return ReporterConfig object
-	def __parse_reporter_config(self, config_parser):
+	def __parse_reporter_config(self, config_parser, config):
 		initial_reporter_config = None
-		reporter_config = ReporterConfig()
 
 		try:
 			initial_reporter_config = config_parser['reporter']
@@ -89,26 +82,23 @@ class INIConfigurationParser(ConfigurationParser):
 			print("Error while parsing reporter configuration occurred.")
 			exit(EXIT_CODE_CONFIG_PARSING_ERROR)
 
-		reporter_config.report_file_path = initial_reporter_config['report_file_path']
-		reporter_config.report_file_extension = initial_reporter_config['report_file_extension']
+		config.report_file_path = initial_reporter_config['report_file_path']
+		config.report_file_extension = initial_reporter_config['report_file_extension']
 
 		if initial_reporter_config['console_report'] == 'True':
-			reporter_config.console_report = True
+			config.console_report = True
 		else:
-			reporter_config.console_report = False
+			config.console_report = False
 
 		if initial_reporter_config['file_report'] == 'True':
-			reporter_config.file_report = True
+			config.file_report = True
 		else:
-			reporter_config.file_report = False
-
-		return reporter_config
+			config.file_report = False
 
 	# parsing logger related parameters
 	# return LoggerConfig object
-	def __parse_logger_config(self, config_parser):
+	def __parse_logger_config(self, config_parser, config):
 		initial_logger_config = None
-		logger_config = LoggerConfig()
 
 		try:
 			initial_logger_config = config_parser['logger']
@@ -116,23 +106,21 @@ class INIConfigurationParser(ConfigurationParser):
 			print("Error while parsing logger configuration occurred.")
 			exit(EXIT_CODE_CONFIG_PARSING_ERROR)
 
-		logger_config.log_file_path = initial_logger_config['log_file_path']
-		logger_config.log_file_extension = initial_logger_config['log_file_extension']
+		config.log_file_path = initial_logger_config['log_file_path']
+		config.log_file_extension = initial_logger_config['log_file_extension']
 
 		if initial_logger_config['console_log'] == 'True':
-			logger_config.console_log = True
+			config.console_log = True
 		else:
-			logger_config.console_log = False
+			config.console_log = False
 
 		if initial_logger_config['file_log'] == 'True':
-			logger_config.file_log = True
+			config.file_log = True
 		else:
-			logger_config.file_log = False
+			config.file_log = False
 
 		if not initial_logger_config['log_level'].isdigit():
 			self.number_of_errors_in_configurations += 1
 			print("log_level must be not negative integer.")
 		else:
-			logger_config.log_level = int(initial_logger_config['log_level'])
-
-		return logger_config
+			config.log_level = int(initial_logger_config['log_level'])
